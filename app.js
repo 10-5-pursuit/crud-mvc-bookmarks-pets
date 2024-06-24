@@ -8,6 +8,9 @@ const app = express()
 
 
 // Middleware
+// express.json() tells our app to accept incoming JSON from requests (POST and PUT)
+app.use(express.json())
+
 // Whenever the URL starts with: localhost:4001/bookmarks -- hand the request off the bookmarksController to route it appropriately
 app.use('/bookmarks', bookmarksController)
 

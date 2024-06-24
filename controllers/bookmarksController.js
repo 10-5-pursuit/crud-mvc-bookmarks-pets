@@ -6,10 +6,29 @@ const bookmarks = express.Router()
 const bookmarksArray = require('../models/bookmark')
 
 
-// Index Routes: gets all of the bookmarks
+// Index Route: gets all of the bookmarks
 // localhost:4001/bookmarks/
 bookmarks.get('/', (req, res) => {
     res.json(bookmarksArray)
+})
+
+// SHOW Route: gets ONE of the bookmarks
+// localhost:4001/bookmarks/0
+bookmarks.get('/:arrayIndex', (req, res) => {
+    const { arrayIndex } = req.params
+    if(bookmarksArray[arrayIndex]){
+        res.status(200).json(bookmarksArray[arrayIndex])
+    } else {
+        res.status(404).json({ error: "Bookmark Not Found" })
+    }
+})
+
+// POST Route: creates a new bookmark and adds it to our array
+// Uses req.body to get information from the request to create a new bookmark
+// localhost:4001/bookmarks/
+bookmarks.post('/', (req, res) => {
+    bookmarksArray.push(req.body)
+    res.json(bookmarksArray[bookmarksArray.length - 1])
 })
 
 
