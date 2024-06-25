@@ -1,6 +1,7 @@
 const express = require('express')
 const pets = express.Router()
 const petsArray = require('../models/pet')
+const { checkForNameKey } = require('../validations/petValidations')
 
 
 // localhost:4001/pets/
@@ -20,7 +21,7 @@ pets.get('/:arrayIndex', (req, res) => {
 
 // POST a new pet
 // localhost:4001/pets
-pets.post('/', (req, res) => {
+pets.post('/', checkForNameKey, (req, res) => {
     petsArray.push(req.body)
     res.status(201).json(petsArray[petsArray.length - 1])
 })

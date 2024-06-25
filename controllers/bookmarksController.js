@@ -5,6 +5,10 @@ const bookmarks = express.Router()
 // Import the bookmarks model
 const bookmarksArray = require('../models/bookmark')
 
+// Import the validation functions from ../validations/bookmarkValidations.js
+// Middleware functions happen between the request and response. Incase a bookmark is submitted without a name, it will return an error as the response telling the user what they wrong.
+const { checkForNameKey, checkForDotCom } = require('../validations/bookmarkValidations')
+
 
 // Index Route: gets all of the bookmarks
 // localhost:4001/bookmarks/
@@ -26,7 +30,7 @@ bookmarks.get('/:arrayIndex', (req, res) => {
 // POST Route: creates a new bookmark and adds it to our array
 // Uses req.body to get information from the request to create a new bookmark
 // localhost:4001/bookmarks/
-bookmarks.post('/', (req, res) => {
+bookmarks.post('/', checkForNameKey, checkForDotCom, (req, res) => {
     bookmarksArray.push(req.body)
     res.json(bookmarksArray[bookmarksArray.length - 1])
 })
@@ -45,7 +49,7 @@ bookmarks.delete('/:arrayIndex', (req, res) => {
 
 // PUT Route (update) will update a specific bookmark in our bookmark array to be the body of the request
 // localhost:4001/bookmarks/2
-bookmarks.put("/:arrayIndex", (req, res) => {
+bookmarks.put("/:arrayIndex", checkForNameKey, checkForDotCom, (req, res) => {
     const { arrayIndex } = req.params
     bookmarksArray[arrayIndex] = req.body
     res.status(200).json(bookmarksArray[arrayIndex])
