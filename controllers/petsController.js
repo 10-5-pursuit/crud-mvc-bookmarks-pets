@@ -38,5 +38,13 @@ pets.delete('/:arrayIndex', (req, res) => {
     }
 })
 
+// PUT Route: UPDATE a pet
+// localhost:4001/pets/1
+pets.put('/:arrayIndex', (req, res) => {
+    const { arrayIndex } = req.params
+    petsArray[arrayIndex] = req.body
+    res.status(200).json(petsArray[arrayIndex])
+})
+
 
 module.exports = pets

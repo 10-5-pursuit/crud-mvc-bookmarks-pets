@@ -35,8 +35,20 @@ bookmarks.post('/', (req, res) => {
 // localhost:4001/bookmarks/2
 bookmarks.delete('/:arrayIndex', (req, res) => {
     const { arrayIndex } = req.params
-    const deletedBookmark = bookmarksArray.splice(arrayIndex, 1)
-    res.json(deletedBookmark[0])
+    if(bookmarksArray[arrayIndex]){
+        const deletedBookmark = bookmarksArray.splice(arrayIndex, 1)
+        res.json(deletedBookmark[0])
+    } else {
+        res.json({ error: "Bookmark Not Found" })
+    }
+})
+
+// PUT Route (update) will update a specific bookmark in our bookmark array to be the body of the request
+// localhost:4001/bookmarks/2
+bookmarks.put("/:arrayIndex", (req, res) => {
+    const { arrayIndex } = req.params
+    bookmarksArray[arrayIndex] = req.body
+    res.status(200).json(bookmarksArray[arrayIndex])
 })
 
 
