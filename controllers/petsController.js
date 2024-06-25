@@ -26,4 +26,17 @@ pets.post('/', (req, res) => {
 })
 
 
+// DELETE a pet
+// localhost:4001/pets/0
+pets.delete('/:arrayIndex', (req, res) => {
+    const { arrayIndex } = req.params
+    if(petsArray[arrayIndex]){
+        petsArray.splice(arrayIndex, 1)
+        res.json({ message: "Successfully adopted a pet" })
+    } else {
+        res.json({ error: "Pet Not Found"})
+    }
+})
+
+
 module.exports = pets

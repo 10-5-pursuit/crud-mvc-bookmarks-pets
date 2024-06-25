@@ -31,6 +31,14 @@ bookmarks.post('/', (req, res) => {
     res.json(bookmarksArray[bookmarksArray.length - 1])
 })
 
+// DELETE Route: delete a bookmark from our bookmarks array
+// localhost:4001/bookmarks/2
+bookmarks.delete('/:arrayIndex', (req, res) => {
+    const { arrayIndex } = req.params
+    const deletedBookmark = bookmarksArray.splice(arrayIndex, 1)
+    res.json(deletedBookmark[0])
+})
+
 
 
 module.exports = bookmarks
